@@ -1,0 +1,30 @@
+---
+layout: page
+permalink: /archive/
+title: Archive
+---
+<section class="archive-page section">
+  <p class="eyebrow">DHEU — THE JOURNAL</p>
+  <div class="section-heading archive-heading"><div><h1 data-bn="প্রকাশনার <em>আর্কাইভ</em>" data-en="The <em>Archive</em>">প্রকাশনার <em>আর্কাইভ</em></h1></div><p class="heading-note" data-bn="ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।" data-en="Every publication from Dheu, gathered in one place.">ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।</p></div>
+  <div class="archive-controls">
+    <input id="archiveSearch" type="search" placeholder="Search by title or author / শিরোনাম বা লেখক খুঁজুন" aria-label="Search publications">
+    <select id="categoryFilter" aria-label="Filter by category"><option value="">All categories / সব বিভাগ</option><option value="poetry">Poetry</option><option value="fiction">Fiction</option><option value="essays">Essays</option><option value="photography">Photography</option><option value="art">Art</option><option value="reviews">Reviews</option></select>
+    <select id="languageFilter" aria-label="Filter by language"><option value="">All languages / সব ভাষা</option><option value="bengali">Bengali</option><option value="english">English</option><option value="bilingual">Bilingual</option></select>
+  </div>
+  {% assign published = site.publications | where: "status", "published" | sort: "date" | reverse %}
+  <div class="archive-grid" id="archiveGrid">
+    {% for post in published %}
+    <article class="archive-card" data-category="{{ post.category }}" data-language="{{ post.language }}" data-search="{{ post.title | downcase | escape }} {{ post.author | downcase | escape }}">
+      <a class="archive-card-image" href="{{ post.url | relative_url }}">
+        {% if post.cover_image %}<img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}">{% else %}<div class="archive-image-placeholder">ঢেউ.</div>{% endif %}
+      </a>
+      <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" }}</span></div>
+      <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+      {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
+      <span class="byline">{{ post.author | escape }}</span>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="archive-empty" id="archiveEmpty" hidden>No publications match your search / কোনও প্রকাশনা পাওয়া যায়নি।</p>
+</section>
+<script src="{{ '/archive.js' | relative_url }}"></script>
