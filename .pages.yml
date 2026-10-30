@@ -1,0 +1,131 @@
+
+media:
+  - name: images
+    label: Magazine Images
+    input: assets/images
+    output: /DHEU/assets/images
+    extensions:
+      - jpg
+      - jpeg
+      - png
+      - webp
+    rename: safe
+
+content:
+  - name: publications
+    label: Publications
+    type: collection
+    path: content/publications
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{primary}.md"
+      field: create
+    view:
+      primary: title
+      fields:
+        - title
+        - category
+        - language
+        - status
+        - date
+      sort: date
+      order: desc
+
+    fields:
+      - name: title
+        label: Publication Title
+        type: string
+        required: true
+
+      - name: subtitle
+        label: Subtitle
+        type: string
+
+      - name: author
+        label: Author Name
+        type: string
+        required: true
+
+      - name: author_bio
+        label: About the Author
+        type: text
+
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - name: poetry
+              label: Poetry
+            - name: fiction
+              label: Fiction
+            - name: essays
+              label: Essays
+            - name: photography
+              label: Photography
+            - name: art
+              label: Art & Illustration
+            - name: reviews
+              label: Book & Literary Reviews
+
+      - name: language
+        label: Language
+        type: select
+        required: true
+        options:
+          values:
+            - name: bengali
+              label: Bengali
+            - name: english
+              label: English
+            - name: bilingual
+              label: Bilingual
+
+      - name: date
+        label: Publication Date
+        type: date
+        required: true
+
+      - name: excerpt
+        label: Short Introduction
+        type: text
+        description: A short description shown on the homepage and archive.
+
+      - name: cover_image
+        label: Cover Photograph
+        type: image
+        options:
+          media: images
+
+      - name: image_caption
+        label: Cover Image Caption / Credit
+        type: text
+
+      - name: gallery
+        label: Additional Photographs
+        type: image
+        options:
+          media: images
+          multiple:
+            max: 12
+
+      - name: featured
+        label: Feature on Homepage
+        type: boolean
+
+      - name: status
+        label: Publication Status
+        type: select
+        required: true
+        options:
+          values:
+            - name: draft
+              label: Draft
+            - name: published
+              label: Published
+
+      - name: body
+        label: Main Content
+        type: rich-text
+        required: true
