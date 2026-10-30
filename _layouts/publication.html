@@ -1,0 +1,12 @@
+---
+layout: page
+---
+<article class="publication-page">
+  <div class="publication-top"><a href="{{ '/archive/' | relative_url }}" class="back-link">← All publications / সব লেখা</a><p class="eyebrow">{{ page.category | upcase }} &nbsp;—&nbsp; {{ page.language | upcase }}</p></div>
+  <header class="publication-header"><h1>{{ page.title | escape }}</h1>{% if page.subtitle %}<p class="publication-subtitle">{{ page.subtitle | escape }}</p>{% endif %}<div class="publication-byline"><span>By {{ page.author | escape }}</span><span>{{ page.date | date: "%d %B %Y" }}</span></div></header>
+  {% if page.cover_image %}<figure class="publication-cover"><img src="{{ page.cover_image | relative_url }}" alt="{{ page.image_caption | default: page.title | escape }}">{% if page.image_caption %}<figcaption>{{ page.image_caption | escape }}</figcaption>{% endif %}</figure>{% endif %}
+  <div class="publication-body">{{ content }}</div>
+  {% if page.gallery %}<div class="publication-gallery">{% for image in page.gallery %}<figure><img src="{{ image | relative_url }}" alt="Additional photograph from {{ page.title | escape }}"></figure>{% endfor %}</div>{% endif %}
+  {% if page.author_bio %}<aside class="author-note"><h2>About the author</h2><p>{{ page.author_bio | escape }}</p></aside>{% endif %}
+  <div class="publication-end"><span>ঢেউ. — WORDS, IMAGES & IDEAS IN MOTION</span><a href="{{ '/archive/' | relative_url }}">Explore more ↗</a></div>
+</article>
