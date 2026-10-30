@@ -1,28 +1,19 @@
-# ঢেউ — Dheu Magazine Website
+# ঢেউ — Dheu Magazine
 
-A responsive bilingual (Bengali/English) static website starter for an independent literary and cultural magazine.
+This version connects Pages CMS to the public website using Jekyll collections and GitHub Pages.
 
-## Files
-- `index.html` — page content and structure
-- `style.css` — design, responsive layout and animations
-- `script.js` — language switch, mobile navigation and reveal effects
+## Publishing workflow
+1. Open Pages CMS and create a publication in **Publications**.
+2. Fill in the title, author, category, language, date, excerpt, images and Main Content.
+3. Set **Publication Status** to `published` to show it publicly; keep it as `draft` to hide it.
+4. Save. GitHub Pages rebuilds the site. New work appears on the homepage and `/archive/`, and gets its own `/publications/<slug>/` page.
 
-## Before launch: make these edits
-1. In `index.html`, replace `YOUR-MAGAZINE-EMAIL@example.com` with the magazine's real submission email address.
-2. Replace the sample/coming-soon article cards with real publications before announcing the site.
-3. Replace the sample photographs with images you own or have permission to publish. The current demo images are loaded from Unsplash URLs.
-4. Update the About text, year and editorial details to match the magazine.
-5. Test the site on a phone and computer.
+## Important repository structure
+- `.pages.yml` — Pages CMS configuration.
+- `_config.yml` — Jekyll configuration for GitHub Pages.
+- `content/_publications/` — publication Markdown files managed by Pages CMS.
+- `assets/images/` — uploaded magazine images.
+- `_layouts/` — article and page templates.
+- `archive/index.html` — searchable and filterable archive.
 
-## Publish with GitHub Pages
-1. Create a **public** repository on GitHub. A suggested name is `dheu-magazine`.
-2. Upload `index.html`, `style.css`, `script.js`, and this README to the repository's root (not inside an extra folder).
-3. Open the repository's **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Choose branch `main` and folder `/ (root)`, then Save.
-6. Wait for GitHub Pages to publish. The site address will appear in Settings → Pages.
-
-The normal project-site address will be `https://YOUR-USERNAME.github.io/dheu-magazine/`.
-
-## Publishing future articles
-This first version is a visual starter. It does not yet include an editorial dashboard or automatic article archive. The next development step can add a simple article system so the site owner can publish new poems, stories and essays by adding Markdown files.
+The existing visual identity, stylesheet, homepage artwork and animations are retained.

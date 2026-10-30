@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -9,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -19,6 +22,7 @@
     <a class="wordmark" href="#" aria-label="Dheu home">ঢেউ<span class="wordmark-dot">.</span></a>
     <nav class="desktop-nav" aria-label="Main navigation">
       <a href="#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
+      <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
       <a href="#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
       <a href="#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
       <a href="#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
@@ -31,6 +35,7 @@
 
   <nav class="mobile-nav" id="mobileNav">
     <a href="#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
+    <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
     <a href="#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
     <a href="#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
     <a href="#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
@@ -62,23 +67,26 @@
 
     <section class="section latest-section" id="latest">
       <div class="section-heading reveal"><div><p class="eyebrow">01 — THE JOURNAL</p><h2 data-bn="নতুন <em>প্রকাশ</em>" data-en="Fresh <em>from the journal</em>">নতুন <em>প্রকাশ</em></h2></div><p class="heading-note" data-bn="নতুন কণ্ঠ, নতুন দৃশ্য, নতুন পাঠ।" data-en="New voices, new perspectives, new ways of seeing.">নতুন কণ্ঠ, নতুন দৃশ্য, নতুন পাঠ।</p></div>
-      <div class="feature-grid">
-        <article class="feature-card feature-large reveal">
-          <a class="card-image" href="#submit"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=85" alt="Notebook and writing desk"><span class="image-arrow">↗</span></a>
-          <div class="card-meta"><span>POETRY / কবিতা</span><span>COMING SOON</span></div>
-          <h3 data-bn="প্রথম সংখ্যার অপেক্ষায়" data-en="A page waiting to be written">প্রথম সংখ্যার অপেক্ষায়</h3>
-          <p data-bn="এখানে প্রকাশিত হবে ঢেউ-এর নির্বাচিত কবিতা ও সৃজনশীল লেখা।" data-en="Selected poems and creative writing from the pages of Dheu will appear here.">এখানে প্রকাশিত হবে ঢেউ-এর নির্বাচিত কবিতা ও সৃজনশীল লেখা।</p>
-          <span class="byline" data-bn="সম্পাদকীয় নির্বাচন" data-en="EDITORIAL SELECTION">সম্পাদকীয় নির্বাচন</span>
-        </article>
+      {% assign published = site.publications | where: "status", "published" | sort: "date" | reverse %}
+      {% if published.size > 0 %}
+      <div class="feature-grid publication-grid">
+        {% for post in published limit: 6 %}
         <article class="feature-card reveal">
-          <a class="card-image tall" href="#sections"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=85" alt="Camera ready for photography"><span class="image-arrow">↗</span></a>
-          <div class="card-meta"><span>PHOTOGRAPHY / আলোকচিত্র</span><span>OPEN CALL</span></div>
-          <h3 data-bn="দেখারও নিজস্ব ভাষা আছে" data-en="Every image has a voice">দেখারও নিজস্ব ভাষা আছে</h3>
-          <p data-bn="ফ্রেমের ভেতর ও বাইরে—আপনার দেখা পৃথিবী আমাদের সঙ্গে ভাগ করে নিন।" data-en="Inside and beyond the frame — share the world as you see it.">ফ্রেমের ভেতর ও বাইরে—আপনার দেখা পৃথিবী আমাদের সঙ্গে ভাগ করে নিন।</p>
-          <span class="byline" data-bn="আলোকচিত্র বিভাগ" data-en="PHOTOGRAPHY DESK">আলোকচিত্র বিভাগ</span>
+          <a class="card-image{% if forloop.index == 2 %} tall{% endif %}" href="{{ post.url | relative_url }}">
+            {% if post.cover_image %}<img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}">{% else %}<img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80" alt="Writing desk">{% endif %}
+            <span class="image-arrow">↗</span>
+          </a>
+          <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" | upcase }}</span></div>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+          {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
+          <span class="byline">{{ post.author | escape }}</span>
         </article>
+        {% endfor %}
       </div>
-      <p class="demo-note" data-bn="এগুলি ওয়েবসাইটের নমুনা কনটেন্ট। প্রকাশনা শুরু হলে এখানে আসল লেখা ও ছবি যোগ হবে।" data-en="These are sample website entries. Replace them with real submissions when the magazine begins publishing.">এগুলি ওয়েবসাইটের নমুনা কনটেন্ট। প্রকাশনা শুরু হলে এখানে আসল লেখা ও ছবি যোগ হবে।</p>
+      <p class="archive-more"><a class="text-link" href="{{ '/archive/' | relative_url }}"><span data-bn="সব প্রকাশনা দেখুন" data-en="Explore all publications">সব প্রকাশনা দেখুন</span><b>↗</b></a></p>
+      {% else %}
+      <div class="empty-publications"><p data-bn="প্রথম প্রকাশনার অপেক্ষায়। খুব শীঘ্রই এখানে ঢেউ-এর লেখা ও ছবি দেখা যাবে।" data-en="Waiting for the first publication. Writing and images from Dheu will appear here soon.">প্রথম প্রকাশনার অপেক্ষায়। খুব শীঘ্রই এখানে ঢেউ-এর লেখা ও ছবি দেখা যাবে।</p></div>
+      {% endif %}
     </section>
 
     <section class="manifesto" id="about">
@@ -90,12 +98,12 @@
     <section class="section categories-section" id="sections">
       <div class="section-heading reveal"><div><p class="eyebrow">03 — EXPLORE</p><h2 data-bn="যে পথে <em>যেতে চান</em>" data-en="Find your <em>current</em>">যে পথে <em>যেতে চান</em></h2></div><p class="heading-note" data-bn="প্রতিটি বিভাগ এক একটি নতুন জানালা।" data-en="Every section opens a different window.">প্রতিটি বিভাগ এক একটি নতুন জানালা।</p></div>
       <div class="category-list">
-        <a class="category-row" href="#latest"><span class="category-number">01</span><span class="category-name" data-bn="কবিতা" data-en="Poetry">কবিতা</span><span class="category-sub" data-bn="বাংলা ও ইংরেজি" data-en="Bengali & English">বাংলা ও ইংরেজি</span><span class="category-arrow">↗</span></a>
-        <a class="category-row" href="#latest"><span class="category-number">02</span><span class="category-name" data-bn="গল্প" data-en="Fiction">গল্প</span><span class="category-sub" data-bn="ছোটগল্প ও কথাসাহিত্য" data-en="Short stories & fiction">ছোটগল্প ও কথাসাহিত্য</span><span class="category-arrow">↗</span></a>
-        <a class="category-row" href="#latest"><span class="category-number">03</span><span class="category-name" data-bn="প্রবন্ধ" data-en="Essays">প্রবন্ধ</span><span class="category-sub" data-bn="সমাজ, সংস্কৃতি ও ভাবনা" data-en="Society, culture & ideas">সমাজ, সংস্কৃতি ও ভাবনা</span><span class="category-arrow">↗</span></a>
-        <a class="category-row" href="#latest"><span class="category-number">04</span><span class="category-name" data-bn="আলোকচিত্র" data-en="Photography">আলোকচিত্র</span><span class="category-sub" data-bn="ফটোগ্রাফি ও ফটো-এস্যে" data-en="Photography & photo essays">ফটোগ্রাফি ও ফটো-এস্যে</span><span class="category-arrow">↗</span></a>
-        <a class="category-row" href="#latest"><span class="category-number">05</span><span class="category-name" data-bn="শিল্প" data-en="Art">শিল্প</span><span class="category-sub" data-bn="চিত্র, ইলাস্ট্রেশন ও পরীক্ষা" data-en="Art, illustration & experiments">চিত্র, ইলাস্ট্রেশন ও পরীক্ষা</span><span class="category-arrow">↗</span></a>
-        <a class="category-row" href="#latest"><span class="category-number">06</span><span class="category-name" data-bn="পাঠ ও পর্যালোচনা" data-en="Reviews">পাঠ ও পর্যালোচনা</span><span class="category-sub" data-bn="বই ও সাহিত্য আলোচনা" data-en="Books & literary conversations">বই ও সাহিত্য আলোচনা</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=poetry"><span class="category-number">01</span><span class="category-name" data-bn="কবিতা" data-en="Poetry">কবিতা</span><span class="category-sub" data-bn="বাংলা ও ইংরেজি" data-en="Bengali & English">বাংলা ও ইংরেজি</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=fiction"><span class="category-number">02</span><span class="category-name" data-bn="গল্প" data-en="Fiction">গল্প</span><span class="category-sub" data-bn="ছোটগল্প ও কথাসাহিত্য" data-en="Short stories & fiction">ছোটগল্প ও কথাসাহিত্য</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=essays"><span class="category-number">03</span><span class="category-name" data-bn="প্রবন্ধ" data-en="Essays">প্রবন্ধ</span><span class="category-sub" data-bn="সমাজ, সংস্কৃতি ও ভাবনা" data-en="Society, culture & ideas">সমাজ, সংস্কৃতি ও ভাবনা</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=photography"><span class="category-number">04</span><span class="category-name" data-bn="আলোকচিত্র" data-en="Photography">আলোকচিত্র</span><span class="category-sub" data-bn="ফটোগ্রাফি ও ফটো-এস্যে" data-en="Photography & photo essays">ফটোগ্রাফি ও ফটো-এস্যে</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=art"><span class="category-number">05</span><span class="category-name" data-bn="শিল্প" data-en="Art">শিল্প</span><span class="category-sub" data-bn="চিত্র, ইলাস্ট্রেশন ও পরীক্ষা" data-en="Art, illustration & experiments">চিত্র, ইলাস্ট্রেশন ও পরীক্ষা</span><span class="category-arrow">↗</span></a>
+        <a class="category-row" href="{{ '/archive/' | relative_url }}?category=reviews"><span class="category-number">06</span><span class="category-name" data-bn="পাঠ ও পর্যালোচনা" data-en="Reviews">পাঠ ও পর্যালোচনা</span><span class="category-sub" data-bn="বই ও সাহিত্য আলোচনা" data-en="Books & literary conversations">বই ও সাহিত্য আলোচনা</span><span class="category-arrow">↗</span></a>
       </div>
     </section>
 
@@ -104,7 +112,7 @@
       <p class="eyebrow">04 — OPEN CALL</p>
       <h2 data-bn="আপনার <em>ঢেউ</em><br>আমাদের কাছে পাঠান।" data-en="Send your <em>wave</em><br>our way.">আপনার <em>ঢেউ</em><br>আমাদের কাছে পাঠান।</h2>
       <p data-bn="কবিতা, গল্প, প্রবন্ধ, আলোকচিত্র বা শিল্পকর্ম—আপনার সৃষ্টির জন্য আমাদের দরজা খোলা।" data-en="Poetry, fiction, essays, photography or art — our doors are open to your work.">কবিতা, গল্প, প্রবন্ধ, আলোকচিত্র বা শিল্পকর্ম—আপনার সৃষ্টির জন্য আমাদের দরজা খোলা।</p>
-      <a class="submit-button" href="mailto:YOUR-MAGAZINE-EMAIL@example.com?subject=Submission%20to%20Dheu"><span data-bn="জমা দেওয়ার জন্য ইমেল করুন" data-en="Email your submission">জমা দেওয়ার জন্য ইমেল করুন</span><b>↗</b></a>
+      <a class="submit-button" href="{{ '/archive/' | relative_url }}"><span data-bn="প্রকাশিত লেখা পড়ুন" data-en="Read the publications">প্রকাশিত লেখা পড়ুন</span><b>↗</b></a>
       <small data-bn="প্রকাশের আগে জমা দেওয়ার নির্দেশিকা ও ইমেল ঠিকানা আপডেট করুন।" data-en="Update the submission guidelines and email address before launch.">প্রকাশের আগে জমা দেওয়ার নির্দেশিকা ও ইমেল ঠিকানা আপডেট করুন।</small>
     </section>
   </main>
@@ -113,6 +121,6 @@
     <div class="footer-top"><a class="wordmark footer-logo" href="#">ঢেউ<span class="wordmark-dot">.</span></a><p data-bn="শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।" data-en="Words, images and ideas in motion.">শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।</p><a class="back-top" href="#">BACK TO TOP ↑</a></div>
     <div class="footer-bottom"><span>© 2026 DHEU — INDEPENDENTLY PUBLISHED</span><span data-bn="বাংলা ও ইংরেজি • সবার জন্য" data-en="BENGALI & ENGLISH • OPEN TO ALL">বাংলা ও ইংরেজি • সবার জন্য</span></div>
   </footer>
-  <script src="script.js"></script>
+  <script src="{{ '/script.js' | relative_url }}"></script>
 </body>
 </html>
