@@ -1,16 +1,29 @@
+
 title: "ঢেউ — Dheu"
 description: "An independent literary and cultural magazine."
+
 baseurl: "/DHEU"
 url: "https://dheu50.github.io"
+
 markdown: kramdown
+
 kramdown:
   hard_wrap: true
+
 collections_dir: content
+
 collections:
   publications:
     output: true
-    layout: publication
     permalink: /publications/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: publications
+    values:
+      layout: publication
+
 exclude:
   - README.md
   - Gemfile
