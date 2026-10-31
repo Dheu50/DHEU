@@ -3,6 +3,7 @@ category: poetry
 language: english
 date: 2026-10-31
 featured: false
+status: published
 ---
 I’ve wandered deserts of despair,
 
