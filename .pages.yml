@@ -15,7 +15,7 @@ content:
   - name: publications
     label: Publications
     type: collection
-    path: content/publications
+    path: content/_publications
     format: yaml-frontmatter
     filename:
       template: "{year}-{month}-{day}-{primary}.md"
