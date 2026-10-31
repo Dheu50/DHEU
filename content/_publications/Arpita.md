@@ -1,5 +1,4 @@
 ---
-title: জ্বর হলে মনে পড়ার মত কোন মুখ নেই আমার
 author: Arpita
 category: poetry
 language: bengali
