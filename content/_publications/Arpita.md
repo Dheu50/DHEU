@@ -4,6 +4,7 @@ category: poetry
 language: bengali
 date: 2026-11-01
 featured: false
+status: published
 ---
 জ্বর হলে মনে পড়ার মত কোন মুখ নেই আমার
 
@@ -31,7 +32,6 @@ featured: false
 
 আগামীর চিঠি আজও এলো না বলেই কি?
 
-  
 
 
 সময়ের সকল বুজরুকী ধরা ফেলেছ - সে নাকি এখন বদলে গেছে?
@@ -44,6 +44,6 @@ featured: false
 
 জ্বর হলে মনে পড়ার মত কোন মুখ নেই আমার ।
 
-  
 
 
+&nbsp;
