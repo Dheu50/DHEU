@@ -35,7 +35,7 @@ content:
       - name: title
         label: Publication Title
         type: string
-        required: true
+        required: false 
 
       - name: subtitle
         label: Subtitle
@@ -44,7 +44,7 @@ content:
       - name: author
         label: Author Name
         type: string
-        required: true
+        required: false 
 
       - name: author_bio
         label: About the Author
@@ -85,7 +85,7 @@ content:
       - name: date
         label: Publication Date
         type: date
-        required: true
+        required: false 
 
       - name: excerpt
         label: Short Introduction
@@ -117,7 +117,7 @@ content:
       - name: status
         label: Publication Status
         type: select
-        required: true
+        required: false 
         options:
           values:
             - name: draft
@@ -128,4 +128,4 @@ content:
       - name: body
         label: Main Content
         type: rich-text
-        required: true
+        required: false 
