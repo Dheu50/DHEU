@@ -12,6 +12,10 @@ media:
     rename: safe
 
 content:
+  # -----------------------------------------
+  # PUBLICATIONS
+  # -----------------------------------------
+
   - name: publications
     label: Publications
     type: collection
@@ -20,6 +24,7 @@ content:
     filename:
       template: "{year}-{month}-{day}-{primary}.md"
       field: create
+
     view:
       primary: title
       fields:
@@ -35,7 +40,7 @@ content:
       - name: title
         label: Publication Title
         type: string
-        required: false 
+        required: false
 
       - name: subtitle
         label: Subtitle
@@ -44,7 +49,7 @@ content:
       - name: author
         label: Author Name
         type: string
-        required: false 
+        required: false
 
       - name: author_bio
         label: About the Author
@@ -85,7 +90,7 @@ content:
       - name: date
         label: Publication Date
         type: date
-        required: false 
+        required: false
 
       - name: excerpt
         label: Short Introduction
@@ -117,7 +122,7 @@ content:
       - name: status
         label: Publication Status
         type: select
-        required: false 
+        required: false
         options:
           values:
             - name: draft
@@ -128,4 +133,72 @@ content:
       - name: body
         label: Main Content
         type: rich-text
-        required: false 
+        required: false
+
+  # -----------------------------------------
+  # PHOTOGRAPHY GALLERY
+  # -----------------------------------------
+
+  - name: photographs
+    label: Photography Gallery
+    type: collection
+    path: content/_photographs
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{primary}.md"
+      field: create
+
+    view:
+      primary: title
+      fields:
+        - title
+        - photographer
+        - date
+        - status
+      sort: date
+      order: desc
+
+    fields:
+      - name: title
+        label: Photograph Title
+        type: string
+        required: true
+
+      - name: image
+        label: Select Photograph
+        type: image
+        required: true
+        options:
+          media: images
+
+      - name: caption
+        label: Caption / Description
+        type: text
+
+      - name: photographer
+        label: Photographer / Credit
+        type: string
+
+      - name: date
+        label: Photograph Date
+        type: date
+        required: true
+
+      - name: location
+        label: Location
+        type: string
+
+      - name: featured
+        label: Feature on Homepage
+        type: boolean
+
+      - name: status
+        label: Publication Status
+        type: select
+        required: true
+        options:
+          values:
+            - name: draft
+              label: Draft
+            - name: published
+              label: Published
