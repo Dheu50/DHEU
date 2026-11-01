@@ -5,41 +5,58 @@ title: Archive
 ---
 <section class="archive-page section">
   <p class="eyebrow">DHEU — THE JOURNAL</p>
-  <div class="section-heading archive-heading"><div><h1 data-bn="প্রকাশনার <em>আর্কাইভ</em>" data-en="The <em>Archive</em>">প্রকাশনার <em>আর্কাইভ</em></h1></div><p class="heading-note" data-bn="ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।" data-en="Every publication from Dheu, gathered in one place.">ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।</p></div>
-  <div class="archive-controls">
-    <input id="archiveSearch" type="search" placeholder="Search by title or author / শিরোনাম বা লেখক খুঁজুন" aria-label="Search publications">
-    <select id="categoryFilter" aria-label="Filter by category"><option value="">All categories / সব বিভাগ</option><option value="poetry">Poetry</option><option value="fiction">Fiction</option><option value="essays">Essays</option><option value="photography">Photography</option><option value="art">Art</option><option value="reviews">Reviews</option></select>
-    <select id="languageFilter" aria-label="Filter by language"><option value="">All languages / সব ভাষা</option><option value="bengali">Bengali</option><option value="english">English</option><option value="bilingual">Bilingual</option></select>
+  <div class="section-heading archive-heading">
+    <div><h1 data-bn="প্রকাশনার <em>আর্কাইভ</em>" data-en="The <em>Archive</em>">প্রকাশনার <em>আর্কাইভ</em></h1></div>
+    <p class="heading-note" data-bn="লেখা, ছবি ও শিল্প—ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।" data-en="Writing, photographs and art, gathered in one place.">লেখা, ছবি ও শিল্প—ঢেউ-এর সমস্ত প্রকাশনা এক জায়গায়।</p>
   </div>
+  <div class="archive-controls">
+    <input id="archiveSearch" type="search" placeholder="Search title, author or collection / খুঁজুন" aria-label="Search archive">
+    <select id="categoryFilter" aria-label="Filter by category">
+      <option value="">All sections / সব বিভাগ</option>
+      <option value="poetry">Poetry</option><option value="fiction">Fiction</option><option value="essays">Essays</option>
+      <option value="photography">Photography</option><option value="art">Art</option><option value="reviews">Reviews</option>
+    </select>
+    <select id="languageFilter" aria-label="Filter by language">
+      <option value="">All languages / সব ভাষা</option><option value="bengali">Bengali</option><option value="english">English</option><option value="bilingual">Bilingual</option>
+    </select>
+  </div>
+
   {% assign published = site.publications | where: "status", "published" | sort: "date" | reverse %}
   <div class="archive-grid" id="archiveGrid">
     {% for post in published %}
-    <article class="archive-card" data-category="{{ post.category }}" data-language="{{ post.language }}" data-search="{{ post.title | downcase | escape }} {{ post.author | downcase | escape }} {{ post.excerpt | strip_html | downcase | escape }}">
-      <a class="archive-card-image" href="{{ post.url | relative_url }}">
-
-  {% if post.cover_image %}
-    <img
-      src="{{ post.cover_image | relative_url }}"
-      alt="{{ post.image_caption | default: post.title | escape }}"
-    >
-  {% else %}
-    <div class="text-cover-art">
-      <span class="text-cover-category">
-        {{ post.category | default: "Writing" | upcase }}
-      </span>
-      <span class="text-cover-letter">ঢ</span>
-      <span class="text-cover-name">DHEU — THE JOURNAL</span>
-    </div>
-  {% endif %}
-
-</a>
-      <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" }}</span></div>
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+    <article class="archive-card archive-publication" data-category="{{ post.category | default: 'writing' }}" data-language="{{ post.language }}" data-search="{{ post.title | default: post.name | downcase | escape }} {{ post.author | downcase | escape }} {{ post.excerpt | strip_html | downcase | escape }}">
+      <a class="archive-card-image{% unless post.cover_image %} archive-card-no-image{% endunless %}" href="{{ post.url | relative_url }}">
+        {% if post.cover_image %}
+          <img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}" loading="lazy">
+        {% else %}
+          <span class="archive-type-mark">{{ post.category | default: "DHEU" | upcase }}</span><span class="archive-type-letter">ঢ</span>
+        {% endif %}
+      </a>
+      <div class="card-meta"><span>{{ post.category | default: "Writing" | upcase }}{% if post.language %} / {{ post.language | upcase }}{% endif %}</span>{% if post.date %}<span>{{ post.date | date: "%d %b %Y" }}</span>{% endif %}</div>
+      <h2><a href="{{ post.url | relative_url }}">{{ post.title | default: post.name | default: "Untitled contribution" | escape }}</a></h2>
       {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
       {% if post.author %}<span class="byline">{{ post.author | escape }}</span>{% endif %}
     </article>
     {% endfor %}
+
+    {% assign photographs = site.photographs | where: "status", "published" | reverse %}
+    {% for collection in photographs %}
+      {% assign cover = collection.photos | first %}
+      {% if collection.photos.size > 0 %}
+      {% assign collection_name = collection.collection_title | default: collection.photographer | default: "Untitled collection" %}
+      <article class="archive-card archive-photo-card" data-category="photography" data-language="" data-search="{{ collection_name | downcase | escape }} {{ collection.photographer | downcase | escape }} {% for photo in collection.photos %}{{ photo.caption | downcase | escape }} {% endfor %}">
+        <a class="archive-card-image" href="{{ '/photography/' | relative_url }}#collection-{{ collection.slug }}">
+          <img src="{{ cover.image | relative_url }}" alt="{{ cover.caption | default: collection_name | escape }}" loading="lazy">
+          <span class="archive-photo-count">{{ collection.photos.size }} FRAMES</span>
+        </a>
+        <div class="card-meta"><span>PHOTOGRAPHY / COLLECTION</span><span>{{ collection.date | date: "%d %b %Y" }}</span></div>
+        <h2><a href="{{ '/photography/' | relative_url }}#collection-{{ collection.slug }}">{{ collection_name | escape }}</a></h2>
+        {% if collection.introduction %}<p>{{ collection.introduction | strip_html | escape }}</p>{% endif %}
+        {% if collection.photographer %}<span class="byline">PHOTOGRAPHER / {{ collection.photographer | escape }}</span>{% else %}<span class="byline">DHEU VISUAL ARCHIVE</span>{% endif %}
+      </article>
+      {% endif %}
+    {% endfor %}
   </div>
-  <p class="archive-empty" id="archiveEmpty" hidden>No publications match your search / কোনও প্রকাশনা পাওয়া যায়নি।</p>
+  <p class="archive-empty" id="archiveEmpty" hidden>No entries match your search / কোনও প্রকাশনা পাওয়া যায়নি।</p>
 </section>
 <script src="{{ '/archive.js' | relative_url }}" defer></script>
