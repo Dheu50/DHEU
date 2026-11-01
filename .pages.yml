@@ -139,6 +139,7 @@ content:
   # PHOTOGRAPHY GALLERY
   # -----------------------------------------
 
+
   - name: photographs
     label: Photography Gallery
     type: collection
@@ -146,54 +147,26 @@ content:
     format: yaml-frontmatter
     filename:
       template: "{year}-{month}-{day}-{primary}.md"
-      field: create
+      field: image
 
     view:
-      primary: title
+      primary: image
       fields:
-        - title
-        - photographer
-        - date
+        - image
         - status
       sort: date
       order: desc
 
     fields:
-      - name: title
-        label: Photograph Title
-        type: string
-        required: true
-
       - name: image
-        label: Select Photograph
+        label: Photograph
         type: image
         required: true
         options:
           media: images
 
-      - name: caption
-        label: Caption / Description
-        type: text
-
-      - name: photographer
-        label: Photographer / Credit
-        type: string
-
-      - name: date
-        label: Photograph Date
-        type: date
-        required: true
-
-      - name: location
-        label: Location
-        type: string
-
-      - name: featured
-        label: Feature on Homepage
-        type: boolean
-
       - name: status
-        label: Publication Status
+        label: Status
         type: select
         required: true
         options:
