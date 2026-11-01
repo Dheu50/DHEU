@@ -47,7 +47,7 @@ permalink: /photography/
             {% assign card_number = card_number | plus: 1 %}
             {% assign cover = collection.photos | first %}
             {% assign collection_name = collection.collection_title | default: collection.photographer | default: "Untitled collection" %}
-            <article class="photo-collection-card photo-reveal">
+            <article class="photo-collection-card photo-reveal" id="collection-{{ collection.slug }}">
               <button class="photo-open" type="button" data-photos='{{ collection.photos | jsonify | escape }}' data-collection="{{ collection_name | escape }}" data-credit="{{ collection.photographer | escape }}" aria-label="Open {{ collection_name | escape }}">
                 <span class="photo-card-image"><img src="{{ cover.image }}" alt="{{ cover.caption | default: collection_name | escape }}" loading="lazy"><span class="photo-card-shade"></span><span class="photo-card-open">VIEW COLLECTION <b>↗</b></span><span class="photo-card-count">{{ collection.photos.size | prepend: '0' | slice: -2, 2 }} FRAMES</span></span>
               </button>
