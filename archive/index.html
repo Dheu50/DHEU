@@ -16,8 +16,23 @@ title: Archive
     {% for post in published %}
     <article class="archive-card" data-category="{{ post.category }}" data-language="{{ post.language }}" data-search="{{ post.title | downcase | escape }} {{ post.author | downcase | escape }} {{ post.excerpt | strip_html | downcase | escape }}">
       <a class="archive-card-image" href="{{ post.url | relative_url }}">
-        {% if post.cover_image %}<img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}">{% else %}<div class="archive-image-placeholder">ঢেউ.</div>{% endif %}
-      </a>
+
+  {% if post.cover_image %}
+    <img
+      src="{{ post.cover_image | relative_url }}"
+      alt="{{ post.image_caption | default: post.title | escape }}"
+    >
+  {% else %}
+    <div class="text-cover-art">
+      <span class="text-cover-category">
+        {{ post.category | default: "Writing" | upcase }}
+      </span>
+      <span class="text-cover-letter">ঢ</span>
+      <span class="text-cover-name">DHEU — THE JOURNAL</span>
+    </div>
+  {% endif %}
+
+</a>
       <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" }}</span></div>
       <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
       {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
