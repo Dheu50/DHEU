@@ -141,36 +141,61 @@ content:
 
 
 
+
   - name: photographs
     label: Photography Gallery
     type: collection
     path: content/_photographs
     format: yaml-frontmatter
+
     filename:
-      template: "{year}-{month}-{day}-{primary}.md"
-      field: image
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
 
     view:
-      primary: image
+      primary: photographer
       fields:
-        - image
         - photographer
+        - collection_title
         - status
-      sort: date
-      order: desc
 
     fields:
-      - name: image
-        label: Photograph
-        type: image
-        required: true
-        options:
-          media: images
-
       - name: photographer
-        label: Photographer / Credit (Optional)
+        label: Photographer's Name (Optional)
         type: string
         required: false
+
+      - name: collection_title
+        label: Collection Title (Optional)
+        type: string
+        required: false
+
+      - name: introduction
+        label: Short Introduction (Optional)
+        type: text
+        required: false
+
+      - name: photos
+        label: Photographs
+        type: object
+        list:
+          min: 1
+          max: 30
+          collapsible:
+            collapsed: true
+            summary: "Photograph {index}"
+        fields:
+          - name: image
+            label: Select Photograph
+            type: image
+            required: true
+            options:
+              media: images
+
+          - name: caption
+            label: Caption (Optional)
+            type: text
+            required: false
 
       - name: status
         label: Publication Status
