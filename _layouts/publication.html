@@ -1,82 +1,28 @@
-
 ---
-layout: page
+layout: default
 ---
-<article class="publication-page">
-
+<article class="publication-page" data-language="{{ page.language | default: 'bengali' }}">
   <div class="publication-top">
-    <a href="{{ '/archive/' | relative_url }}" class="back-link">
-      ← All publications / সব লেখা
-    </a>
-    <p class="eyebrow">
-      {{ page.category | upcase }} &nbsp;—&nbsp; {{ page.language | upcase }}
-    </p>
+    <a href="{{ '/archive/' | relative_url }}" class="back-link"><span aria-hidden="true">←</span><span data-bn="সব লেখা / আর্কাইভে ফিরুন" data-en="All publications / Back to archive">সব লেখা / আর্কাইভে ফিরুন</span></a>
+    <p class="eyebrow publication-category">{{ page.category | default: "publication" | replace: "-", " " | upcase }} <span aria-hidden="true">✳</span> {{ page.language | default: "bengali" | upcase }}</p>
   </div>
-
-  {% if page.title or page.subtitle or page.author or page.date %}
   <header class="publication-header">
-
-    {% if page.title %}
-      <h1>{{ page.title | escape }}</h1>
-    {% endif %}
-
-    {% if page.subtitle %}
-      <p class="publication-subtitle">
-        {{ page.subtitle | escape }}
-      </p>
-    {% endif %}
-
-    {% if page.author or page.date %}
+    <p class="publication-kicker">ঢেউ. <span>—</span> THE JOURNAL</p>
+    <h1>{{ page.title | default: page.name | escape }}</h1>
+    {% if page.subtitle %}<p class="publication-subtitle">{{ page.subtitle | escape }}</p>{% endif %}
+    {% if page.excerpt %}<p class="publication-deck">{{ page.excerpt | strip_html | escape }}</p>{% endif %}
     <div class="publication-byline">
-      {% if page.author %}
-        <span>By {{ page.author | escape }}</span>
-      {% endif %}
-
-      {% if page.date %}
-        <span>{{ page.date | date: "%d %B %Y" }}</span>
-      {% endif %}
+      {% if page.author %}<span><span data-bn="লিখেছেন" data-en="By">লিখেছেন</span> {{ page.author | escape }}</span>{% endif %}
+      {% if page.date %}<span>{{ page.date | date: "%d %B %Y" }}</span>{% endif %}
     </div>
-    {% endif %}
-
+    <div class="publication-header-rule"><span></span><i>✳</i><span></span></div>
   </header>
-  {% endif %}
-
-  {% if page.cover_image %}
-  <figure class="publication-cover">
-    <img
-      src="{{ page.cover_image | relative_url }}"
-      alt="{{ page.image_caption | default: page.title | default: 'Publication image' | escape }}"
-    >
-    {% if page.image_caption %}
-      <figcaption>{{ page.image_caption | escape }}</figcaption>
-    {% endif %}
-  </figure>
-  {% endif %}
-
-  <div class="publication-body">
-    {{ content }}
+  {% if page.cover_image %}<figure class="publication-cover"><img src="{{ page.cover_image | relative_url }}" alt="{{ page.image_caption | default: page.title | escape }}">{% if page.image_caption %}<figcaption>{{ page.image_caption | escape }}</figcaption>{% endif %}</figure>{% endif %}
+  <div class="publication-reading-layout">
+    <aside class="publication-side-note" aria-hidden="true"><span>WORDS · IMAGES · IDEAS</span><span>ঢেউ — 2026</span></aside>
+    <div class="publication-body">{{ content }}</div>
   </div>
-
-  {% if page.gallery %}
-  <div class="publication-gallery">
-    {% for image in page.gallery %}
-    <figure>
-      <img src="{{ image | relative_url }}" alt="Additional publication photograph">
-    </figure>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  {% if page.author_bio %}
-  <aside class="author-note">
-    <h2>About the author</h2>
-    <p>{{ page.author_bio | escape }}</p>
-  </aside>
-  {% endif %}
-
-  <div class="publication-end">
-    <span>ঢেউ. — WORDS, IMAGES & IDEAS IN MOTION</span>
-    <a href="{{ '/archive/' | relative_url }}">Explore more ↗</a>
-  </div>
-
+  {% if page.gallery %}<div class="publication-gallery">{% for image in page.gallery %}<figure><img src="{{ image | relative_url }}" alt="Additional publication photograph" loading="lazy"></figure>{% endfor %}</div>{% endif %}
+  {% if page.author_bio %}<aside class="author-note"><div class="author-note-mark">ঢ</div><div><h2 data-bn="লেখক পরিচিতি" data-en="About the author">লেখক পরিচিতি</h2><p>{{ page.author_bio | escape }}</p></div></aside>{% endif %}
+  <nav class="publication-end" aria-label="Publication navigation"><span>ঢেউ. — WORDS, IMAGES & IDEAS IN MOTION</span><a href="{{ '/archive/' | relative_url }}"><span data-bn="আরও লেখা পড়ুন" data-en="Explore more">আরও লেখা পড়ুন</span> ↗</a></nav>
 </article>

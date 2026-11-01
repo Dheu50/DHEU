@@ -1,48 +1,10 @@
 ---
-layout: null
+layout: default
+title: Home
+permalink: /
 ---
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f0e8">
-  <meta name="description" content="ঢেউ — an independent literary and cultural magazine. Literature, art, photography and ideas in Bengali and English.">
-  <title>ঢেউ — Words, images & ideas in motion</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
-</head>
-<body>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="topline"><span data-bn="স্বাধীন সাহিত্য ও সংস্কৃতি পত্রিকা" data-en="AN INDEPENDENT LITERARY & CULTURAL JOURNAL">স্বাধীন সাহিত্য ও সংস্কৃতি পত্রিকা</span><span class="topline-right">VOL. 01 <i>✳</i> EST. 2026</span></div>
 
-  <header class="site-header">
-    <a class="wordmark" href="#" aria-label="Dheu home">ঢেউ<span class="wordmark-dot">.</span></a>
-    <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
-      <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
-      <a href="#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
-      <a href="#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
-      <a href="#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
-    </nav>
-    <div class="header-actions">
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">EN <span>↗</span></button>
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-    </div>
-  </header>
-
-  <nav class="mobile-nav" id="mobileNav">
-    <a href="#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
-    <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
-    <a href="#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
-    <a href="#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
-    <a href="#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
-  </nav>
-
-  <main>
-    <section class="hero">
+<section class="hero">
       <div class="hero-copy reveal">
         <p class="eyebrow"><span class="eyebrow-line"></span><span data-bn="শব্দ • ছবি • ভাবনা" data-en="WORDS • IMAGES • IDEAS">শব্দ • ছবি • ভাবনা</span></p>
         <h1 data-bn="শব্দেরও আছে<br><em>ঢেউ।</em>" data-en="Words have<br><em>waves.</em>">শব্দেরও আছে<br><em>ঢেউ।</em></h1>
@@ -68,9 +30,11 @@ layout: null
     <section class="section latest-section" id="latest">
       <div class="section-heading reveal"><div><p class="eyebrow">01 — THE JOURNAL</p><h2 data-bn="নতুন <em>প্রকাশ</em>" data-en="Fresh <em>from the journal</em>">নতুন <em>প্রকাশ</em></h2></div><p class="heading-note" data-bn="নতুন কণ্ঠ, নতুন দৃশ্য, নতুন পাঠ।" data-en="New voices, new perspectives, new ways of seeing.">নতুন কণ্ঠ, নতুন দৃশ্য, নতুন পাঠ।</p></div>
       {% assign published = site.publications | where: "status", "published" | sort: "date" | reverse %}
-      {% if published.size > 0 %}
+      {% assign homepage_posts = published | where: "featured", true %}
+      {% if homepage_posts.size == 0 %}{% assign homepage_posts = published %}{% endif %}
+      {% if homepage_posts.size > 0 %}
       <div class="feature-grid publication-grid">
-        {% for post in published limit: 6 %}
+        {% for post in homepage_posts limit: 6 %}
         <article class="feature-card reveal">
           <a class="card-image{% if forloop.index == 2 %} tall{% endif %}" href="{{ post.url | relative_url }}">
             {% if post.cover_image %}<img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}">{% else %}<img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80" alt="Writing desk">{% endif %}
@@ -79,7 +43,7 @@ layout: null
           <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" | upcase }}</span></div>
           <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
           {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
-          <span class="byline">{{ post.author | escape }}</span>
+          {% if post.author %}<span class="byline">{{ post.author | escape }}</span>{% endif %}
         </article>
         {% endfor %}
       </div>
@@ -115,12 +79,3 @@ layout: null
       <a class="submit-button" href="{{ '/archive/' | relative_url }}"><span data-bn="প্রকাশিত লেখা পড়ুন" data-en="Read the publications">প্রকাশিত লেখা পড়ুন</span><b>↗</b></a>
       <small data-bn="প্রকাশের আগে জমা দেওয়ার নির্দেশিকা ও ইমেল ঠিকানা আপডেট করুন।" data-en="Update the submission guidelines and email address before launch.">প্রকাশের আগে জমা দেওয়ার নির্দেশিকা ও ইমেল ঠিকানা আপডেট করুন।</small>
     </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-top"><a class="wordmark footer-logo" href="#">ঢেউ<span class="wordmark-dot">.</span></a><p data-bn="শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।" data-en="Words, images and ideas in motion.">শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।</p><a class="back-top" href="#">BACK TO TOP ↑</a></div>
-    <div class="footer-bottom"><span>© 2026 DHEU — INDEPENDENTLY PUBLISHED</span><span data-bn="বাংলা ও ইংরেজি • সবার জন্য" data-en="BENGALI & ENGLISH • OPEN TO ALL">বাংলা ও ইংরেজি • সবার জন্য</span></div>
-  </footer>
-  <script src="{{ '/script.js' | relative_url }}"></script>
-</body>
-</html>

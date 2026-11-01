@@ -1,0 +1,47 @@
+{% assign document_language = "bn" %}
+{% if page.language == "english" %}{% assign document_language = "en" %}{% endif %}
+<!DOCTYPE html>
+<html lang="{{ document_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0e8">
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | escape }}">
+  <title>{% if page.title and page.title != "Home" %}{{ page.title | escape }} — {% endif %}ঢেউ — Dheu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+</head>
+<body id="top" class="site-shell{% if document_language == 'bn' %} bn{% endif %}" data-content-language="{{ document_language }}">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="topline"><span data-bn="স্বাধীন সাহিত্য ও সংস্কৃতি পত্রিকা" data-en="AN INDEPENDENT LITERARY & CULTURAL JOURNAL">স্বাধীন সাহিত্য ও সংস্কৃতি পত্রিকা</span><span class="topline-right">VOL. 01 <i>✳</i> EST. 2026</span></div>
+  <header class="site-header">
+    <a class="wordmark" href="{{ '/' | relative_url }}" aria-label="Dheu home">ঢেউ<span class="wordmark-dot">.</span></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="{{ '/' | relative_url }}#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
+      <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
+      <a href="{{ '/' | relative_url }}#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
+      <a href="{{ '/' | relative_url }}#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
+      <a href="{{ '/' | relative_url }}#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">EN <span>↗</span></button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="{{ '/' | relative_url }}#latest" data-bn="সাম্প্রতিক" data-en="Latest">সাম্প্রতিক</a>
+    <a href="{{ '/archive/' | relative_url }}" data-bn="আর্কাইভ" data-en="Archive">আর্কাইভ</a>
+    <a href="{{ '/' | relative_url }}#sections" data-bn="বিভাগ" data-en="Sections">বিভাগ</a>
+    <a href="{{ '/' | relative_url }}#about" data-bn="আমাদের কথা" data-en="About">আমাদের কথা</a>
+    <a href="{{ '/' | relative_url }}#submit" data-bn="লেখা পাঠান" data-en="Submit">লেখা পাঠান</a>
+  </nav>
+  <main class="site-main">{{ content }}</main>
+  <footer class="footer">
+    <div class="footer-top"><a class="wordmark footer-logo" href="{{ '/' | relative_url }}">ঢেউ<span class="wordmark-dot">.</span></a><p data-bn="শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।" data-en="Words, images and ideas in motion.">শব্দ, ছবি ও ভাবনার অবাধ প্রবাহ।</p><a class="back-top" href="#top" data-bn="ওপরে ফিরুন ↑" data-en="BACK TO TOP ↑">BACK TO TOP ↑</a></div>
+    <div class="footer-bottom"><span>© 2026 DHEU — INDEPENDENTLY PUBLISHED</span><span data-bn="বাংলা ও ইংরেজি • সবার জন্য" data-en="BENGALI & ENGLISH • OPEN TO ALL">BENGALI & ENGLISH • OPEN TO ALL</span></div>
+  </footer>
+  <script src="{{ '/script.js' | relative_url }}" defer></script>
+</body>
+</html>
