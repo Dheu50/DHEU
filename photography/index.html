@@ -5,169 +5,73 @@ permalink: /photography/
 ---
 
 {% assign photographs = site.photographs | where: "status", "published" | reverse %}
+{% assign total_images = 0 %}
+{% for collection in photographs %}
+  {% assign total_images = total_images | plus: collection.photos.size %}
+{% endfor %}
 
-<section class="photo-gallery-page">
+<div class="photo-progress" id="photoProgress" aria-hidden="true"></div>
+<section class="photo-experience">
+  <div class="photo-grain" aria-hidden="true"></div>
 
-  <header class="photo-gallery-hero">
-    <div class="photo-hero-top">
-      <span>ঢেউ. — VISUAL JOURNAL</span>
-      <span>VOL. 01 / 2026</span>
-    </div>
-
-    <div class="photo-hero-main">
-      <div class="photo-hero-title">
-        <p class="photo-eyebrow">A DIFFERENT WAY OF SEEING</p>
-        <h1>Photography<span>.</span></h1>
-        <p class="photo-bengali-title">আলোকচিত্র</p>
-      </div>
-
-      <div class="photo-hero-note">
-        <span class="photo-asterisk">✳</span>
-        <p>
-          Moments, places, people and fragments of everyday life.
-          A visual collection by different eyes and different voices.
-        </p>
+  <header class="photo-cinema-hero">
+    <div class="photo-hero-meta"><span>ঢেউ. / VISUAL JOURNAL</span><span>ISSUE 001 <i>✳</i> 2026</span></div>
+    <div class="photo-hero-copy">
+      <p class="photo-kicker photo-reveal"><span></span> A DIFFERENT WAY OF SEEING</p>
+      <h1 class="photo-display photo-reveal">PHOTO<br><em>GRAPHY</em><b>.</b></h1>
+      <div class="photo-hero-lower photo-reveal">
+        <p class="photo-bengali">আলোকচিত্র</p>
+        <p class="photo-intro">Moments, places, people and fragments of everyday life. A visual collection by different eyes and different voices.</p>
       </div>
     </div>
-
-    <div class="photo-hero-bottom">
-      <span>IMAGE / MEMORY / EXPERIENCE</span>
-      <span>{{ photographs.size }} COLLECTIONS</span>
-      <span>SCROLL TO EXPLORE ↓</span>
-    </div>
+    <div class="photo-hero-orbit" aria-hidden="true"><span>✳</span></div>
+    <div class="photo-hero-foot"><span>IMAGE / MEMORY / EXPERIENCE</span><span>{{ photographs.size }} COLLECTIONS&nbsp; · &nbsp;{{ total_images }} IMAGES</span><a href="#photoCollections">EXPLORE THE JOURNAL <b>↓</b></a></div>
   </header>
 
-  <div class="photo-gallery-intro">
-    <p>THE COLLECTION — 001</p>
-    <h2>Small frames.<br><em>Entire worlds.</em></h2>
-    <span>একটি ছবির মধ্যেও থেকে যায় অনেক না-বলা কথা।</span>
-  </div>
+  <section class="photo-collection-section" id="photoCollections">
+    <div class="photo-section-heading photo-reveal">
+      <div><p class="photo-kicker"><span></span> THE ARCHIVE / 2026</p><h2>Small frames.<br><em>Entire worlds.</em></h2></div>
+      <p class="photo-heading-note">একটি ছবির মধ্যেও থেকে যায়<br>অনেক না-বলা কথা।</p>
+    </div>
 
-  {% assign collection_count = 0 %}
-  {% for collection in photographs %}
-    {% if collection.photos.size > 0 %}
-      {% assign collection_count = collection_count | plus: 1 %}
+    {% assign collection_count = 0 %}
+    {% for collection in photographs %}
+      {% if collection.photos.size > 0 %}{% assign collection_count = collection_count | plus: 1 %}{% endif %}
+    {% endfor %}
+
+    {% if collection_count > 0 %}
+      <div class="photo-collection-grid">
+        {% assign card_number = 0 %}
+        {% for collection in photographs %}
+          {% if collection.photos.size > 0 %}
+            {% assign card_number = card_number | plus: 1 %}
+            {% assign cover = collection.photos | first %}
+            {% assign collection_name = collection.collection_title | default: collection.photographer | default: "Untitled collection" %}
+            <article class="photo-collection-card photo-reveal">
+              <button class="photo-open" type="button" data-photos='{{ collection.photos | jsonify | escape }}' data-collection="{{ collection_name | escape }}" data-credit="{{ collection.photographer | escape }}" aria-label="Open {{ collection_name | escape }}">
+                <span class="photo-card-image"><img src="{{ cover.image }}" alt="{{ cover.caption | default: collection_name | escape }}" loading="lazy"><span class="photo-card-shade"></span><span class="photo-card-open">VIEW COLLECTION <b>↗</b></span><span class="photo-card-count">{{ collection.photos.size | prepend: '0' | slice: -2, 2 }} FRAMES</span></span>
+              </button>
+              <div class="photo-card-details"><div><span class="photo-card-number">/ {% if card_number < 10 %}0{% endif %}{{ card_number }}</span><h3>{{ collection_name | escape }}</h3>{% if collection.introduction %}<p>{{ collection.introduction | escape }}</p>{% endif %}</div><div class="photo-card-credit">{% if collection.photographer %}<span>PHOTOGRAPHER</span><strong>{{ collection.photographer | escape }}</strong>{% else %}<span>FROM THE ARCHIVE</span>{% endif %}</div></div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="photo-empty"><span>✳</span><h2>The gallery is waiting.</h2><p>Photographs will appear here as they are published.</p></div>
     {% endif %}
-  {% endfor %}
+  </section>
 
-  {% if collection_count > 0 %}
-
-    <div class="photo-gallery-grid">
-
-      {% assign card_number = 0 %}
-
-      {% for collection in photographs %}
-
-        {% if collection.photos.size > 0 %}
-
-          {% assign card_number = card_number | plus: 1 %}
-          {% assign cover = collection.photos | first %}
-          {% assign collection_name = collection.collection_title | default: collection.photographer | default: "Untitled collection" %}
-
-          <article class="photo-card">
-
-            <button
-              class="photo-open"
-              type="button"
-              data-photos='{{ collection.photos | jsonify | escape }}'
-              data-collection="{{ collection_name | escape }}"
-              data-credit="{{ collection.photographer | escape }}"
-              aria-label="Open {{ collection_name | escape }}"
-            >
-
-              <div class="photo-image-wrap">
-                <img
-                  src="{{ cover.image }}"
-                  alt="{{ cover.caption | default: collection_name | escape }}"
-                  loading="lazy"
-                >
-                <span class="photo-zoom">↗</span>
-              </div>
-
-            </button>
-
-            <div class="photo-card-info">
-              <div>
-                <h3>{{ collection_name | escape }}</h3>
-
-                {% if collection.introduction %}
-                  <p>{{ collection.introduction | escape }}</p>
-                {% endif %}
-              </div>
-
-              <div class="photo-credit">
-                {% if collection.photographer %}
-                  <span>{{ collection.photographer | escape }}</span>
-                {% endif %}
-
-                <span>{{ collection.photos.size }} photographs</span>
-              </div>
-            </div>
-
-            <span class="photo-index">
-              {% if card_number < 10 %}0{% endif %}{{ card_number }}
-            </span>
-
-          </article>
-
-        {% endif %}
-
-      {% endfor %}
-
-    </div>
-
-  {% else %}
-
-    <div class="photo-empty">
-      <span>✳</span>
-      <h2>The gallery is waiting.</h2>
-      <p>Photographs will appear here as they are published.</p>
-    </div>
-
-  {% endif %}
-
-  <footer class="photo-gallery-footer">
-    <span>ঢেউ. — WORDS, IMAGES & IDEAS</span>
-    <span>KEEP LOOKING. KEEP SEEING.</span>
-  </footer>
-
+  <footer class="photo-end-note"><span>ঢেউ. — WORDS, IMAGES & IDEAS</span><p>KEEP LOOKING.<br><em>KEEP SEEING.</em></p><span>END OF THE CURRENT ARCHIVE&nbsp; ↗</span></footer>
 </section>
 
-<div class="photo-lightbox" id="photoLightbox" hidden>
-
-  <button
-    class="photo-lightbox-close"
-    id="photoLightboxClose"
-    type="button"
-    aria-label="Close image"
-  >×</button>
-
-  <div class="photo-lightbox-content">
-
-    <button
-      class="photo-lightbox-prev"
-      id="photoLightboxPrev"
-      type="button"
-      aria-label="Previous photograph"
-    >←</button>
-
-    <img id="photoLightboxImage" src="" alt="">
-
-    <button
-      class="photo-lightbox-next"
-      id="photoLightboxNext"
-      type="button"
-      aria-label="Next photograph"
-    >→</button>
-
-    <div class="photo-lightbox-caption">
-      <p id="photoLightboxText"></p>
-      <span id="photoLightboxCredit"></span>
-      <span id="photoLightboxCounter"></span>
-    </div>
-
+<div class="photo-lightbox" id="photoLightbox" hidden aria-modal="true" role="dialog" aria-label="Photograph collection viewer">
+  <div class="photo-viewer-top"><span class="photo-viewer-brand">ঢেউ. <i>/ VISUAL JOURNAL</i></span><span id="photoViewerCollection"></span><button class="photo-lightbox-close" id="photoLightboxClose" type="button" aria-label="Close viewer">CLOSE <b>×</b></button></div>
+  <div class="photo-viewer-stage">
+    <button class="photo-lightbox-prev" id="photoLightboxPrev" type="button" aria-label="Previous photograph">←</button>
+    <div class="photo-viewer-image-wrap"><img id="photoLightboxImage" src="" alt=""></div>
+    <button class="photo-lightbox-next" id="photoLightboxNext" type="button" aria-label="Next photograph">→</button>
   </div>
-
+  <div class="photo-viewer-bottom"><div class="photo-viewer-caption"><p id="photoLightboxText"></p><span id="photoLightboxCredit"></span></div><div class="photo-viewer-index"><strong id="photoLightboxCounter">01 / 01</strong><span class="photo-viewer-track"><i id="photoViewerTrack"></i></span></div></div>
+  <p class="photo-viewer-hint">USE ← → TO EXPLORE <span>·</span> ESC TO CLOSE</p>
 </div>
-
 <script src="{{ '/photography.js' | relative_url }}" defer></script>
