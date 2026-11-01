@@ -557,3 +557,34 @@ body.photo-lightbox-active {
 @media(max-width:800px){.photo-cinema-hero{min-height:690px;min-height:calc(88svh - 70px);padding:25px 6% 20px}.photo-hero-orbit{right:-15%;top:27%;opacity:.7}.photo-display{font-size:clamp(75px,17vw,145px)}.photo-collection-section{padding:85px 6% 95px}.photo-collection-grid{column-gap:5%;row-gap:70px}.photo-collection-card:nth-child(even){margin-top:80px}.photo-collection-card:nth-child(3n){width:85%}.photo-card-details{display:block}.photo-card-credit{text-align:left;margin-top:15px}.photo-end-note{padding-left:6%;padding-right:6%}}
 @media(max-width:560px){.photo-cinema-hero{min-height:650px;min-height:calc(88svh - 70px);padding:20px 6% 17px}.photo-hero-meta,.photo-hero-foot{font-size:7px;letter-spacing:.1em}.photo-hero-meta{align-items:flex-start}.photo-hero-copy{margin:70px 0 55px}.photo-display{font-size:clamp(72px,18vw,105px);line-height:.78}.photo-hero-lower{display:block}.photo-bengali{margin-bottom:12px}.photo-intro{font-size:11px;max-width:290px}.photo-hero-orbit{width:260px;right:-30%;top:30%}.photo-hero-foot{flex-wrap:wrap;row-gap:12px}.photo-hero-foot a{width:100%}.photo-collection-section{padding:72px 6% 80px}.photo-section-heading{display:block;margin-bottom:38px}.photo-section-heading h2{font-size:clamp(43px,11vw,64px)}.photo-heading-note{margin-top:23px;font-size:13px}.photo-collection-grid{display:block}.photo-collection-card,.photo-collection-card:nth-child(even),.photo-collection-card:nth-child(3n){width:100%;margin:0 0 55px}.photo-card-image,.photo-collection-card:nth-child(even) .photo-card-image{aspect-ratio:4/5}.photo-collection-card:nth-child(3n) .photo-card-image{aspect-ratio:4/5}.photo-card-details{display:flex;flex-direction:column;gap:12px}.photo-card-credit{margin:0;text-align:left}.photo-end-note{align-items:start;flex-direction:column;padding:28px 6% 35px}.photo-end-note p{font-size:43px}.photo-lightbox{padding:16px 4% 15px}.photo-viewer-top{font-size:7px}.photo-viewer-stage{padding:18px 0}.photo-lightbox-prev,.photo-lightbox-next{width:36px;height:36px;background:rgba(0,0,0,.55)}.photo-lightbox-prev{left:5px}.photo-lightbox-next{right:5px}.photo-viewer-bottom{align-items:start}.photo-viewer-index{min-width:82px}.photo-viewer-track{width:82px}.photo-viewer-caption p{font-size:11px}.photo-viewer-caption span{font-size:7px}.photo-viewer-hint{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.photo-experience *, .photo-lightbox *{animation:none!important;transition:none!important;scroll-behavior:auto!important}.photo-reveal{opacity:1;transform:none}.photo-hero-orbit{transform:none}}
+
+
+/* Dheu archive and section pages */
+.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:54px 34px;align-items:start}
+.archive-card{min-width:0}
+.archive-card-image{height:300px;position:relative;background:#e8e0d4}
+.archive-card-image img{display:block}
+.archive-card-no-image{display:flex;flex-direction:column;justify-content:space-between;padding:22px 25px;background:#e9e2d6;color:var(--ink)}
+.archive-type-mark{font-size:9px;letter-spacing:.18em;color:var(--muted)}
+.archive-type-letter{font-family:var(--bangla);font-size:clamp(90px,15vw,170px);line-height:.8;color:var(--orange);align-self:flex-end}
+.archive-photo-count{position:absolute;right:14px;bottom:14px;padding:8px 11px;background:var(--paper);font-size:9px;letter-spacing:.12em}
+.archive-card h2{font-size:clamp(24px,3vw,34px)}
+.archive-card p{max-width:560px}
+.archive-empty{font-size:13px}
+.category-page{padding-top:70px}
+.category-intro{max-width:650px;margin:18px 0 55px;color:var(--muted);font-size:14px;line-height:1.9}
+.category-page .archive-grid{margin-top:35px}
+.category-page .category-page-heading{border-bottom:1px solid var(--line);padding-bottom:28px}
+.category-page-heading h1{font-family:var(--bangla),var(--serif);font-size:clamp(48px,7vw,84px);line-height:1.08;margin:0}
+.category-page-heading .eyebrow{margin-bottom:16px}
+.category-page .archive-card-image{height:260px}
+.category-page .archive-card-no-image{height:210px}
+@media(max-width:650px){
+ .archive-grid{grid-template-columns:1fr;gap:38px}
+ .archive-card-image{height:260px}
+ .archive-page{padding-top:55px}
+ .archive-controls{grid-template-columns:1fr;gap:9px;margin:25px 0 32px}
+ .category-page{padding-top:52px}
+ .category-intro{margin:14px 0 35px}
+ .category-page .archive-card-image{height:250px}
+}
