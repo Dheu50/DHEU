@@ -140,6 +140,7 @@ content:
   # -----------------------------------------
 
 
+
   - name: photographs
     label: Photography Gallery
     type: collection
@@ -153,6 +154,7 @@ content:
       primary: image
       fields:
         - image
+        - photographer
         - status
       sort: date
       order: desc
@@ -165,8 +167,13 @@ content:
         options:
           media: images
 
+      - name: photographer
+        label: Photographer / Credit (Optional)
+        type: string
+        required: false
+
       - name: status
-        label: Status
+        label: Publication Status
         type: select
         required: true
         options:
