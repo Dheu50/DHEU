@@ -37,9 +37,24 @@ permalink: /
         {% for post in homepage_posts limit: 6 %}
         <article class="feature-card reveal">
           <a class="card-image{% if forloop.index == 2 %} tall{% endif %}" href="{{ post.url | relative_url }}">
-            {% if post.cover_image %}<img src="{{ post.cover_image | relative_url }}" alt="{{ post.image_caption | default: post.title | escape }}">{% else %}<img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80" alt="Writing desk">{% endif %}
-            <span class="image-arrow">↗</span>
-          </a>
+
+  {% if post.cover_image %}
+    <img
+      src="{{ post.cover_image | relative_url }}"
+      alt="{{ post.image_caption | default: post.title | escape }}"
+    >
+  {% else %}
+    <div class="text-cover-art">
+      <span class="text-cover-category">
+        {{ post.category | default: "Writing" | upcase }}
+      </span>
+      <span class="text-cover-letter">ঢ</span>
+      <span class="text-cover-name">DHEU — THE JOURNAL</span>
+    </div>
+  {% endif %}
+
+  <span class="image-arrow">↗</span>
+</a>
           <div class="card-meta"><span>{{ post.category | upcase }} / {{ post.language | upcase }}</span><span>{{ post.date | date: "%d %b %Y" | upcase }}</span></div>
           <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
           {% if post.excerpt %}<p>{{ post.excerpt | strip_html | escape }}</p>{% endif %}
