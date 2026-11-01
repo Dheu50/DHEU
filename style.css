@@ -501,3 +501,44 @@ body.photo-lightbox-active {
     transition: none;
   }
 }
+/* Photography collection viewer controls */
+
+.photo-lightbox-content {
+  position: relative;
+}
+
+.photo-lightbox-prev,
+.photo-lightbox-next {
+  position: absolute;
+  top: 40%;
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.photo-lightbox-prev {
+  left: 12px;
+}
+
+.photo-lightbox-next {
+  right: 12px;
+}
+
+.photo-lightbox-prev[hidden],
+.photo-lightbox-next[hidden] {
+  display: none;
+}
+
+.photo-lightbox-caption {
+  text-align: center;
+}
+
+.photo-lightbox-active {
+  overflow: hidden;
+}
